@@ -1,34 +1,39 @@
 package com.ur.project.HotelApp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String login;
-    private String password;
-    private String name;
-    private String lastName;
+    private String imie;
+    private String nazwisko;
     private String email;
     private String nr_tel;
+
+    @OneToMany(mappedBy = "person")
+    private List<Rezerwacja> rezerwacja;
 
     public Person() {
     }
 
-    public Person(String login, String password, String name, String lastName, String email, String nr_tel) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
+    public Person(String imie, String nazwisko, String email, String nr_tel) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
         this.email = email;
         this.nr_tel = nr_tel;
+    }
+
+    public List<Rezerwacja> getRezerwacja() {
+        return rezerwacja;
+    }
+
+    public void setRezerwacja(List<Rezerwacja> rezerwacja) {
+        this.rezerwacja = rezerwacja;
     }
 
     public long getId() {
@@ -39,36 +44,20 @@ public class Person {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getImie() {
+        return imie;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setImie(String imie) {
+        this.imie = imie;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNazwisko() {
+        return nazwisko;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
     }
 
     public String getEmail() {

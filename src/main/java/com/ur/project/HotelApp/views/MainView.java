@@ -1,6 +1,8 @@
 package com.ur.project.HotelApp.views;
 
 
+import com.ur.project.HotelApp.repositories.HotelRepository;
+import com.ur.project.HotelApp.repositories.MiastoRepository;
 import com.ur.project.HotelApp.repositories.PersonRepository;
 import com.ur.project.HotelApp.repositories.RezerwacjaRepository;
 import com.vaadin.annotations.Theme;
@@ -14,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @SpringUI
-@Title("Zaczynajmy")
+@Title("HotelApp")
 @Theme("darktheme")
 @Component
 public class MainView extends UI{
@@ -25,6 +27,12 @@ public class MainView extends UI{
     @Autowired
     RezerwacjaRepository rezerwacjaRepository;
 
+    @Autowired
+    MiastoRepository miastoRepository;
+
+    @Autowired
+    HotelRepository hotelRepository;
+
 
     @Override
     protected void init(VaadinRequest request){
@@ -34,12 +42,10 @@ public class MainView extends UI{
 
         Button bookingView = new Button("Zarezerwuj", e -> getNavigator().navigateTo("BookView"));
         bookingView.addStyleNames(ValoTheme.BUTTON_LINK,ValoTheme.MENU_ITEM);
-        Button bookingManagement = new Button("Twoje rezerwacje");
+        Button bookingManagement = new Button("Rezerwacje", e -> getNavigator().navigateTo("ManageView"));
         bookingManagement.addStyleNames(ValoTheme.BUTTON_LINK,ValoTheme.MENU_ITEM);
-        Button logout = new Button("Wyloguj", e-> getNavigator().navigateTo("LoginView"));
-        logout.addStyleNames(ValoTheme.BUTTON_LINK,ValoTheme.MENU_ITEM);
 
-        CssLayout menu = new CssLayout(menuTitle, bookingView, bookingManagement, logout);
+        CssLayout menu = new CssLayout(menuTitle, bookingView, bookingManagement);
         menu.addStyleName(ValoTheme.MENU_ROOT);
         CssLayout viewContainer = new CssLayout();
 
@@ -52,8 +58,7 @@ public class MainView extends UI{
 
         Navigator navigator = new Navigator(this, viewContainer);
         navigator.addView("", DefaultView.class);
-        navigator.addView("LoginView", new LoginView(personRepository));
-        navigator.addView("SignupView",new SignupView(personRepository));
-        navigator.addView("BookView", new BookingView(rezerwacjaRepository));
+        navigator.addView("BookView", new BookingView(rezerwacjaRepository, personRepository, miastoRepository, hotelRepository));
+        navigator.addView("ManageView", new ManageView(personRepository, rezerwacjaRepository));
     }
 }

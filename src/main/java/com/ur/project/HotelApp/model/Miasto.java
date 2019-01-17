@@ -7,12 +7,12 @@ import java.util.List;
 public class Miasto {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String nazwa;
 
-    @OneToMany
+    @OneToMany(mappedBy = "miasto")
     private List<Hotel> hotel;
 
     public void setHotel(List<Hotel> hotel) {

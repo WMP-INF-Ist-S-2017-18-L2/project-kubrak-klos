@@ -1,8 +1,6 @@
 package com.ur.project.HotelApp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 
@@ -10,13 +8,9 @@ import java.sql.Date;
 public class Rezerwacja {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String tytul;
-    private String imie;
-    private String nazwisko;
-    private String email;
     private String miasto;
     private String hotel;
     private String pokoj;
@@ -24,14 +18,14 @@ public class Rezerwacja {
     private java.sql.Date odKiedy;
     private java.sql.Date doKiedy;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
+
     public Rezerwacja() {
     }
 
-    public Rezerwacja(String tytul, String imie, String nazwisko, String email, String miasto, String hotel, String pokoj, String lozka, java.sql.Date odKiedy, java.sql.Date doKiedy) {
-        this.tytul = tytul;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.email = email;
+    public Rezerwacja(String miasto, String hotel, String pokoj, String lozka, Date odKiedy, Date doKiedy) {
         this.miasto = miasto;
         this.hotel = hotel;
         this.pokoj = pokoj;
@@ -48,36 +42,12 @@ public class Rezerwacja {
         this.id = id;
     }
 
-    public String getTytul() {
-        return tytul;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setTytul(String tytul) {
-        this.tytul = tytul;
-    }
-
-    public String getImie() {
-        return imie;
-    }
-
-    public void setImie(String imie) {
-        this.imie = imie;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getMiasto() {
@@ -116,7 +86,7 @@ public class Rezerwacja {
         return odKiedy;
     }
 
-    public void setOdKiedy(java.sql.Date odKiedy) {
+    public void setOdKiedy(Date odKiedy) {
         this.odKiedy = odKiedy;
     }
 
@@ -124,7 +94,7 @@ public class Rezerwacja {
         return doKiedy;
     }
 
-    public void setDoKiedy(java.sql.Date doKiedy) {
+    public void setDoKiedy(Date doKiedy) {
         this.doKiedy = doKiedy;
     }
 }

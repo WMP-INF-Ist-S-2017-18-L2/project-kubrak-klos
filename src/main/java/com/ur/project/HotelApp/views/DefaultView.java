@@ -8,5 +8,5 @@ import com.vaadin.ui.Label;
 
 @SpringView
 public class DefaultView extends Composite implements View {
-    public DefaultView() {setCompositionRoot(new Label("This is default view"));}
+    public DefaultView() {setCompositionRoot(new Label(" "));}
 }
